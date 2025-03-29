@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MarketPlace</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+
+    <!-- CSS
+	============================================ -->
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/pe-icon-7-stroke.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/minibootstrap.css}">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/odometer.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/ion.rangeSlider.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+    <!-- Header Start  -->
+        <!-- importation du menu -->
+        <th:block th:insert="fragments/menu.html :: menu"></th:block>
+        <!-- fin importation du menu -->
+    <!-- Header End -->
+
+    <div class="menu-overlay"></div>
+
+    <!-- Page Banner Section Start -->
+    <div class="section page-banner-section" style="background-image: url(/images/page-banner.jpg);">
+        <div class="container">
+
+            <!-- Page Banner Content End -->
+            <div class="page-banner-content">
+                <h2 class="title">Mon Compte</h2>
+
+                <ul class="breadcrumb">
+                    <li><a href="#">Accueil</a></li>
+                    <li class="active">Mon Compte</li>
+                </ul>
+            </div>
+            <!-- Page Banner Content End -->
+
+        </div>
+    </div>
+    <!-- Page Banner Section End -->
+
+    <!-- My Account Section Start -->
+    <div class="section section-padding mt-n6">
+        <div class="container">
+            <div class="row">
+                <div id="messages-error" th:if="${error}">
+                    <div class="mt-6"> <span class="alert alert-danger">désolé une erreur s'est produite</span></div>
+                </div>
+                <div id="messages-success" th:if="${success}">
+                    <div class="mt-6"> <span class="alert alert-success">votre opération a été réalisée avec succes</span></div>
+                </div>
+                <div class="col-xl-3 col-md-4">
+                    <!-- My Account Menu Start -->
+                    <div class="my-account-menu mt-6">
+                        <ul class="nav account-menu-list flex-column">
+                            <li>
+                                <a class="active" data-bs-toggle="pill" href="#pills-dashboard"><i
+                                        class="fa fa-tachometer"></i> Accueil</a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="pill" href="#pills-order"><i class="fa fa-shopping-cart"></i> Mes
+                                    Commandes</a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="pill" href="#pills-download"><i class="fa fa-cloud-download"></i>
+                                    Download</a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="pill" href="#pills-payment"><i class="fa fa-credit-card"></i> Moyens
+                                    de Paiements</a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="pill" href="#pills-address"><i class="fa fa-map-marker"></i>Mes
+                                    Addresses</a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="pill" href="#pills-account"><i class="fa fa-user"></i> Mes
+                                    Informations</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Déconnexion</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- My Account Menu End -->
+                </div>
+                <div class="col-xl-9 col-md-8">
+                    <!-- Tab content start -->
+                    <div class="tab-content my-account-tab mt-6">
+                        <div class="tab-pane fade show active" id="pills-dashboard">
+                            <div class="my-account-dashboard account-wrapper">
+                                <h4 class="account-title">Accueil</h4>
+                                <div class="welcome-dashboard">
+                                    <p>Salut, <strong th:text="${clientInformations}"></strong> <strong>Bienvenue dans
+                                            votre espace !</strong> :-) </p>
+                                </div>
+                                <p class="mt-25">À partir de votre espace. vous pouvez facilement consulter et voir
+                                    létat de vos commandes, administrer votre comptes et gérer vos adresses.</p><br>
+                                <th:block th:if="${verification}">
+                                    <p class="alert alert-warning">important : <strong
+                                            th:text="${client.prenom}"></strong> <span th:text="${verification}"></span>
+                                    </p>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-order">
+                            <div class="my-account-order account-wrapper">
+                                <h4 class="account-title">Mes Commandes en attente de livraison</h4>
+                                <div class="account-table text-center mt-30 table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="no">numéro ticket</th>
+                                                <th class="name">code validation</th>
+                                                <th class="name">boutique</th>
+                                                <th class="date">date innitiale livraison</th>
+                                                <th class="date">date butoire livraison</th>
+                                                <th class="price">montant Total</th>
+                                                <th class="status">statut commande</th>
+                                                <th class="action">opération</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="commande: ${commandeAttente}">
+                                                <td th:text="${commande.idCommande}"></td>
+                                                <td th:text="${commande.bonCommande.code}"></td>
+                                                <td th:text="${commande.utilisateur.boutique.nom}"></td>
+                                                <td th:text="${commande.dateCommande}"></td>
+                                                <td th:text="${commande.dateButoire}"></td>
+                                                <td th:text="${commande.prix}"></td>
+                                                <td th:text="${commande.etat}"></td>
+                                                <td><a class="btn btn-success" href="">détails</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-download">
+                            <div class="my-account-download account-wrapper">
+                                <h4 class="account-title">historique des commandes</h4>
+                                <div class="account-table text-center mt-30 table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="no">numéro ticket</th>
+                                                <th class="name">code validation</th>
+                                                <th class="name">boutique</th>
+                                                <th class="date">date innitiale livraison</th>
+                                                <th class="date">date butoire livraison</th>
+                                                <th class="price">montant Total</th>
+                                                <th class="status">statut commande</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="commande: ${commandeHistorique}">
+                                                <td th:text="${commande.idCommande}"></td>
+                                                <td th:text="${commande.bonCommande.code}"></td>
+                                                <td th:text="${commande.utilisateur.boutique.nom}"></td>
+                                                <td th:text="${commande.dateCommande}"></td>
+                                                <td th:text="${commande.dateButoire}"></td>
+                                                <td th:text="${commande.prix}"></td>
+                                                <td th:text="${commande.etat}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-payment">
+                            <div class="my-account-payment account-wrapper">
+                                <h4 class="account-title">Moyens de paiments</h4>
+                                <p class="mt-30">Nous ne considérons que les moyens MTN/MOBILE MONEY Cameroun et ORANGE
+                                    MONEY Cameroun pour l'instant.</p>
+                                <th:block th:if="${numeroNonConforme}">
+                                    <th:block th:if="${telephone1Valide}">
+                                        <div class="col-md-6">
+                                            <div class="single-form">
+                                                <span class="title" th:text="${client.telephone1}"></span>&nbsp;<a
+                                                    th:href="@{/client/telephone1}"
+                                                    class=" btn btn-success">Vérifier</a>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                    <th:block th:if="${telephone2Valide}">
+                                        <div class="col-md-6">
+                                            <div class="single-form">
+                                                <span class="title" th:text="${client.telephone2}"></span>&nbsp;<a
+                                                    th:href="@{/client/telephone2}" class="btn btn-success">Vérifier</a>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-address">
+                            <div class="my-account-address account-wrapper">
+                                <div class="row">
+                                    <th:block th:if="${adresseVide}">
+                                        <div class="account-details">
+                                            <div class="col-md-12">
+                                                <div class="single-form">
+                                                    <h5 class="title">Définissez vos adresses de livraisons</h5>
+                                                </div>
+                                            </div>
+                                            <form th:action="@{/adresse/client/ajouter}" method="post">
+                                                <div class="col-md-12">
+                                                    <div class="single-select2">
+                                                        <div class="form-select2">
+                                                            <select class="select2" th:name="adresse" id="adresse1-1"
+                                                                placeholder="dans le cadre">
+                                                                <option value="" class="form-control">veillez spécifier
+                                                                    la premiere adresse de livraison</option>
+                                                                <th:block th:each="livraison : ${adresses}">
+                                                                    <option th:value="${livraison.idAdresse}"
+                                                                        th:text="${livraison.localisation}"
+                                                                        class="form-control"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="single-select2">
+                                                        <div class="form-select2">
+                                                            <select class="select2" th:name="adresse" id="adresse2-1"
+                                                                placeholder="dans le cadre">
+                                                                <option value="" class="form-control">veillez spécifier
+                                                                    la deuxieme adresse de livraison</option>
+                                                                <th:block th:each="livraison : ${adresses}">
+                                                                    <option th:value="${livraison.idAdresse}"
+                                                                        th:text="${livraison.localisation}"
+                                                                        class="form-control"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-form">
+                                                        <button
+                                                            class="btn btn-success btn-hover-dark">Enregistrer</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </th:block>
+                                    <div class="col-md-6" th:each="adresse: ${client.adresseUser}">
+                                        <h4 class="account-title">Adresse de livraison</h4>
+                                        <div class="account-address mt-30">
+                                            <h6 class="name" th:text="${clientInformations}"></h6>
+                                            <p th:text="${adresse.localisation}"></p>
+                                            <a class="btn btn-primary btn-hover-dark" href="#pills-account"><i
+                                                    class="fa fa-edit"></i> Modifier l'adresse</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pills-account">
+                            <div class="my-account-details account-wrapper">
+                                <h4 class="account-title">Mes Informations</h4>
+                                <div class="account-details">
+                                    <form th:action="@{/client/modifier}" method="post" th:object="${client}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="single-form">
+                                                    <input th:field="${client.prenom}" type="text"
+                                                        th:value="${client.prenom}" placeholder="Prénom" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="single-form">
+                                                    <input th:field="${client.nom}" type="text" th:value="${client.nom}"
+                                                        placeholder="Nom" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="single-form">
+                                                    <input th:field="${client.dateNaissance}" type="date"
+                                                        th:value="${client.dateNaissance}"
+                                                        placeholder="date de naissance" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="single-form">
+                                                    <input th:field="${client.telephone1}" type="number"
+                                                        th:value="${client.telephone1}" placeholder="numéro téléphone 1"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="single-form">
+                                                    <input th:field="${client.telephone2}" type="number"
+                                                        th:value="${client.telephone2}" placeholder="numéro téléphone 2"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="single-form">
+                                                    <button type="submit"
+                                                        class="btn btn-success btn-hover-dark">Enregistrer les
+                                                        changements</button>
+                                                </div>
+                                            </div>
+                                    </form><br>
+                                    <th:block th:unless="${adresseVide}">
+                                        <!-- les adresses de livraisons -->
+                                        <div class="account-details">
+                                            <div class="col-md-12">
+                                                <div class="single-form">
+                                                    <h5 class="title">Modifier vos adresses de livraisons</h5>
+                                                </div>
+                                            </div>
+                                            <form th:action="@{/adresse/client/modifier}" method="post">
+                                                <div class="col-md-12">
+                                                    <div class="single-select2">
+                                                        <div class="form-select2">
+                                                            <select class="select2" th:name="adresse1" id="adresse1"
+                                                                required>
+                                                                <option value="" class="form-control">modifier la
+                                                                    premiere
+                                                                    adresse de livraison</option>
+                                                                <th:block th:each="livraison : ${adresses}">
+                                                                    <option th:value="${livraison.idAdresse}"
+                                                                        th:text="${livraison.localisation}"
+                                                                        class="form-control"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="single-select2">
+                                                        <div class="form-select2">
+                                                            <select class="select2" th:name="adresse2" id="adresse2">
+                                                                <option value="" class="form-control">modifier la
+                                                                    deuxieme
+                                                                    adresse de livraison</option>
+                                                                <th:block th:each="livraison : ${adresses}">
+                                                                    <option th:value="${livraison.idAdresse}"
+                                                                        th:text="${livraison.localisation}"
+                                                                        class="form-control"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-form">
+                                                        <button
+                                                            class="btn btn-success btn-hover-dark">Enregistrer</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </th:block>
+                                    <!--  -->
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <h5 class="title">Changer votre mot de passe</h5>
+                                        </div>
+                                    </div>
+                                    <form th:action="@{/client/modifier/password}" method="post">
+                                        <div class="col-md-12">
+                                            <div class="single-form">
+                                                <input type="password" name="nouveau" placeholder="Nouveau Mot de Passe"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="single-form">
+                                                <input type="password" name="confirmer"
+                                                    placeholder="Confirmez Nouveau Mot de Passe" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="single-form">
+                                                <button class="btn btn-success btn-hover-dark">Enregistrer les
+                                                    changements</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tab content End -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- My Account Section End -->
+    <!-- Footer Section Start -->
+    <div class="section footer-section">
+
+        <!-- Footer Top Start -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-2 col-md-4">
+
+                        <!-- Footer Logo Start -->
+                        <div class="footer-logo">
+                            <a href="index.html"><img src="assets/images/logo.png" alt="Logo"></a>
+                        </div>
+                        <!-- Footer Logo End -->
+
+                    </div>
+                    <div class="col-xl-5 col-md-8">
+
+                        <!-- Footer Contact & Payment End -->
+                        <div class="footer-contact-payment">
+                            <div class="footer-contact">
+                                <div class="contact-icon">
+                                    <img src="assets/images/icon/icon-4.png" alt="Icon">
+                                </div>
+
+                                <div class="contact-content">
+                                    <h6 class="title">Call Us:</h6>
+                                    <p>00 123 456 789</p>
+                                </div>
+                            </div>
+                            <div class="footer-payment">
+                                <img src="assets/images/payment.png" alt="Payment">
+                            </div>
+                        </div>
+                        <!-- Footer Contact & Payment End -->
+
+                    </div>
+                    <div class="col-xl-5 ">
+
+                        <!-- Footer Subscribe End -->
+                        <div class="footer-subscribe">
+                            <span class="title">Subscribe Now :</span>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Your Mail">
+                                    <button><i class="pe-7s-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Footer Subscribe End -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Top End -->
+
+        <!-- Footer Widget Section Start -->
+        <div class="footer-widget-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Customer Service</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns-Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Information</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">About Furbar</a></li>
+                                <li><a href="#">How to Shop</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Contact us</a></li>
+                                <li><a href="#">Log in</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">My Account</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="#">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-2 col-md-5 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Our Stores</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">New aYork</a></li>
+                                <li><a href="#">London SF</a></li>
+                                <li><a href="#">Cockfosters BP</a></li>
+                                <li><a href="#">Los Angeles</a></li>
+                                <li><a href="#">Chicago</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-3 col-md-7">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">About Us</h4>
+
+                            <div class="widget-about">
+                                <p>Lorem ipsum dolor sit amet consect adipisicing elit sed do eiusmod temp incididunt ut
+                                    labore et dolore magna aliqua. Ut enim ad minim</p>
+                            </div>
+                            <div class="widget-social">
+                                <ul>
+                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Widget End -->
+
+        <!-- Footer Copyright End -->
+        <div class="copyright">
+            <div class="container">
+                <div class="copyright-text">
+                    <p>&copy; 2021 <span> Furbar </span> Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                            href="https://hasthemes.com/" target="_blank">HasThemes</a></p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Copyright End -->
+
+    </div>
+    <!-- Footer Section End -->
+
+    <!--Back To Start-->
+    <a href="#" class="back-to-top">
+        <i class="pe-7s-angle-up"></i>
+    </a>
+    <!--Back To End-->
+
+
+
+
+
+    <!-- JS
+    ============================================ -->
+
+    <!-- Modernizer & jQuery JS -->
+    <script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/plugins/ajax-contact.js}"></script>
+    <script th:src="@{/js/plugins/appear.js}"></script>
+    <script th:src="@{/js/plugins/odometer.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/js/plugins/select2.min.js}"></script>
+    <script th:src="@{/js/plugins/ion.rangeSlider.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.zoom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js}"></script> -->
+
+
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

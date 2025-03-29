@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+  <title>Ma liste d'article</title>
+</head>
+
+<body>
+
+  <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark"> -->
+  <!-- Brand -->
+  <!-- <a class="navbar-brand" href="#">Liste de mes articles</a> -->
+
+  <!-- Toggler/collapsibe Button -->
+  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+
+  <!-- Navbar links -->
+  <!-- <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">Accueil</a>
+      </li>
+    </ul>
+  </div>
+</nav> -->
+
+  <div class="container">
+    <div class="row">
+      <h1>Liste des Articles</h1>
+      <br><br>
+    </div>
+    <a class="btn btn-success" th:href="@{/home}"> &lt;- retour à l'accueil </a><br><br>
+    <th:block th:if="${produits == null}">
+      <h2 class="title alert-info">Vous n'avez aucun article pour l'instant</h2>
+    </th:block>
+    <th:block th:if="${valide}">
+      <h2 class="title alert-danger">vous devez valider votre compte en completant votre profil !</h2>
+    </th:block>
+    <th:block th:if="${refus}">
+      <h2 class="title alert-warning"> votre article appartient peut-être à une ou plusieurs commandes non livrées</h2>
+    </th:block>
+    <th:block th:unless="${produits == null}">
+      <div>
+        <div class="container">
+          <div class="table-responsive table-hover">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>références</th>
+                  <th>catégorie</th>
+                  <th>noms articles</th>
+                  <th>prix</th>
+                  <th>quantités</th>
+                  <th>seuils</th>
+                  <th>descriptions</th>
+                  <th>dates d'ajouts</th>
+                  <th>actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="produit: ${produits}">
+                  <td th:text="${produit.reference}"></td>
+                  <td th:text="${produit.categorie.libelle}"></td>
+                  <td th:text="${produit.libelle}"></td>
+                  <td th:text="${produit.prix}"></td>
+                  <td th:text="${produit.quantite}"></td>
+                  <td th:text="${produit.seuil}"></td>
+                  <td th:text="${produit.description}"></td>
+                  <td th:text="${produit.dateAjout}"></td>
+                  <td><a th:href="@{/produit/modifier/{id}(id=${produit.idProduit})}"
+                      class="btn btn-success">Modifier</a>&nbsp;<a
+                      th:href="@{/produit/supprimer/{id}(id=${produit.idProduit})}" class="btn btn-danger">supprimer</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- pagination -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" th:if="${pageCourante != 0}">
+              <a th:href="@{/produit/liste-produits/} + ${pageCourante - 1}" class="page-link" href="#">Précédant</a>
+            </li>
+            <li th:each="i: ${#numbers.sequence(1, total)}" th:classappend="${pageCourante == i - 1 ? 'active' : ''}"
+              class="page-item">
+              <a th:href="@{/produit/liste-produits/} + ${i - 1}" class="page-link" href="#"><span
+                  th:text="${i}"></span></a>
+            </li>
+            <li th:if="${pageCourante + 1 != total}" class="page-item">
+              <a th:href="@{/produit/liste-produits/} + ${pageCourante + 1}" class="page-link" href="#">Suivant</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- fin pagination -->
+      </div>
+  </div>
+  </th:block>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Marquet place</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <!-- CSS
+	============================================ -->
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/pe-icon-7-stroke.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/minibootstrap.css}">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/odometer.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/ion.rangeSlider.min.css}">
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <link rel="stylesheet" th:href="@{/css/vendor/plugins.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.min.css">
+     -->
+</head>
+
+<body>
+    <!-- importation du menu -->
+    <th:block th:insert="fragments/menu.html :: menu"></th:block>
+    <!-- fin importation du menu -->
+
+    <!-- Page Banner Section Start -->
+    <div class="section page-banner-section" style="background-image: url(/images/page-banner.jpg);">
+        <div class="container">
+
+            <!-- Page Banner Content End -->
+            <div class="page-banner-content">
+                <h2 class="title">Liste des Boutique</h2>
+
+                <ul class="breadcrumb">
+                    <li><a th:href="@{/produit/liste/0}">Acceuil</a></li>
+                    <li class="active">Toutes les Boutiques</li>
+                </ul>
+            </div>
+            <!-- Page Banner Content End -->
+
+        </div>
+    </div>
+    <!-- Page Banner Section End -->
+    <!-- -----------------------------------------SECTION DE D'INTERIEURE DE PAGE------------------------------------- -->
+
+
+    <!-- Shop Section Start -->
+    <div class="section section-padding mt-n10">
+        <div class="container">
+
+            <!-- Shop top Bar Start -->
+            <div class="shop-top-bar">
+                <div class="shop-text">
+                    <p><span th:text="${totalBoutiques}"></span> boutique(s) à afficher</p>
+                </div>
+                <div class="shop-sort">
+                    <span class="title">Trier par :</span>
+                    <select class="nice_select">
+                        <option value="1">Nom</option>
+                        <option value="2">Emplacement</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Shop top Bar End -->
+            <th:block th:if="${boutiques != null}">
+                <th:block th:if="${totalBoutiques > 0}">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="grid">
+
+                            <!-- Shop Product Wrapper Start -->
+                            <div class="shop-product-wrapper">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-6" th:each="boutique: ${boutiques}">
+                                        <!-- Single Product Start -->
+                                        <div class="single-product">
+                                            <a th:href="@{produit/0/} + ${boutique.idBoutique}"><img
+                                                    th:src="@{/images/boutiques/} + ${boutique.logo}" alt="boutique"
+                                                    height="350px"></a>
+                                            <div class="product-content">
+                                                <h4 class="title"><a th:href="@{produit/0/} + ${boutique.idBoutique}"
+                                                        th:text="${boutique.nom}"></a></h4>
+                                                <div class="price">
+                                                    <span class="sale-price" th:text="${boutique.slogan}"></span>
+                                                </div>
+                                            </div>
+                                            <ul class="product-meta">
+                                                <li><a class="action"
+                                                        th:href="@{/favorie/boutique/ajouter/{id}(id=${boutique.idBoutique})}"><i
+                                                            class="pe-7s-like"></i></a></li>
+                                                <li><i class="copyright-text">
+                                                        <th:block th:text="${#lists.size(boutique.favories)}"></th:block>
+                                                        &nbsp;<i class="pe-7s-like2"></i>
+                                                    </i></li>
+                                            </ul>
+                                        </div>
+                                        <!-- Single Product End -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Shop Product Wrapper End -->
+
+                            <!-- Page pagination Start -->
+                            <div class="page-pagination">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" th:if="${pageCourante != 0}">
+                                        <a class="page-link"
+                                            th:href="@{/boutique/liste/{pageNo}(pageNo=${pageCourante - 1})}"><i
+                                                class="fa fa-angle-left"></i></a>
+                                    </li>
+                                    <li class="page-item" th:each="i: ${#numbers.sequence(1, total)}"
+                                        th:classappend="${pageCourante == i - 1 ? 'active' : ''}">
+                                        <a th:href="@{/boutique/liste/} + ${i - 1}" class="page-link" href="#"><span
+                                                th:text="${i}"></span></a>
+                                    </li>
+                                    <li class="page-item" th:if="${pageCourante + 1 != total}">
+                                        <a th:href="@{/boutique/liste/{pageNo}(pageNo=${pageCourante + 1})}"
+                                            class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Page pagination End -->
+                </th:block>
+                <div th:if="${totalBoutiques <= 0}">
+                    <br><br><br>
+                    <h1>AUCUNE BOUTIQUE POUR LE MOMENT MAIS SOYEZ PRET !</h1>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+    <!-- Page pagination Start -->
+    <!-- <div class="page-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+            </div> -->
+    <!-- Page pagination End -->
+
+    </div>
+    </div>
+    <!-- SECTION LISTE DE PRODUITS FIN -->
+
+
+    <!-- -----------------------------------------SECTION DE D'INTERIEURE DE PAGE------------------------------------- -->
+
+    <!-- Footer Section Start -->
+    <!-- inclusion du footer -->
+    <th:block th:insert="fragments/footer.html :: footer"></th:block>
+    <!-- fin inclusion footer -->
+    <!-- Footer Section End -->
+
+    <!-- JS
+    ============================================ -->
+
+    <!-- Modernizer & jQuery JS -->
+    <script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+    <script th:src="@{/js/plugins/ajax-contact.js}"></script>
+    <script th:src="@{/js/plugins/appear.js}"></script>
+    <script th:src="@{/js/plugins/odometer.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/js/plugins/select2.min.js}"></script>
+    <script th:src="@{/js/plugins/ion.rangeSlider.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.zoom.min.js}"></script>
+    <!-- <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script> -->
+    <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            function sucess(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            sucess("[[${success}]]");
+        </script>
+    </div>
+
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            function erreur(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            erreur("[[${error}]]");
+        </script>
+    </div>
+</body>
+
+</html>

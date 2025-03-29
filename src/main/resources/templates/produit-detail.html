@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MarketPlace</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+    <!-- CSS
+	============================================ -->
+    <!--  -->
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/pe-icon-7-stroke.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/font-awesome.min.css}">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/odometer.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/ion.rangeSlider.min.css}">
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!--  -->
+
+
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <link rel="stylesheet" href="assets/css/vendor/plugins.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
+     -->
+</head>
+
+<body>
+
+    <!-- importation du menu -->
+    <th:block th:insert="fragments/menu.html :: menu"></th:block>
+    <!-- fin importation du menu -->
+
+    <div class="menu-overlay"></div>
+
+    <!-- Page Banner Section Start -->
+    <div class="section page-banner-section" style="background-image: url(/images/page-banner.jpg);">
+        <div class="container">
+
+            <!-- Page Banner Content End -->
+            <div class="page-banner-content">
+                <h2 class="title">Détails du produit</h2>
+
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Détails du produit</li>
+                </ul>
+            </div>
+            <!-- Page Banner Content End -->
+
+        </div>
+    </div>
+    <!-- Page Banner Section End -->
+
+    <!-- Product Details Section Start -->
+    <div class="section section-padding-02 mt-n10">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+
+                    <!-- Product Details Images Start -->
+                    <div class="product-details-images">
+
+                        <!-- Details Gallery Images Start -->
+                        <div class="details-gallery-images">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" th:each="image: ${produit.images}">
+                                        <div class="single-img zoom">
+                                            <img th:src="@{/images/produits/} + ${image.chemin}" alt="Image Produit">
+                                            <div class="inner-stuff">
+                                                <div class="gallery-item"
+                                                    th:data-src="@{/images/produits/} + ${image.chemin}">
+                                                    <a href="javascript:void(0)">
+                                                        <i class="lastudioicon-full-screen"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Details Gallery Images End -->
+
+                        <!-- Details Gallery Thumbs Start -->
+                        <div class="details-gallery-thumbs">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" th:each="image: ${produit.images}">
+                                        <img th:src="@{/images/produits/} + ${image.chemin}" alt="Product Thumbnail"
+                                            height="100px">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
+                            <div class="swiper-button-next"><i class="pe-7s-angle-right"></i></div>
+                        </div>
+                        <!-- Details Gallery Thumbs End -->
+
+                    </div>
+                    <!-- Product Details Images End -->
+
+                </div>
+                <div class="col-lg-6">
+                    <!-- Product Details Description Start -->
+                    <div class="product-details-description">
+                        <h4 class="product-name" th:text="${produit.libelle}"></h4>
+                        <div class="price">
+                            <span class="sale-price" th:text="${produit.prix}"></span>
+                        </div>
+                        <form th:action="@{/panier/add}" method="post">
+                            <div class="product-meta">
+                                <div class="product-quantity d-inline-flex">
+                                    <button type="button" class="sub">-</i></button>
+                                    <input type="text" value="1" min="1" th:max="${produit.quantite}"
+                                        name="quantite" />
+                                    <button type="button" class="add">+</button>
+                                </div>
+                                <!-- id du produit  -->
+                                <input type="hidden" name="id" th:value="${produit.idProduit}">
+                                <div class="meta-action">
+                                    <button type="submit" class="btn btn-dark btn-hover-primary">Ajouter Au
+                                        Panier</button>
+                                </div>
+                                <div class="meta-action">
+                                    <a class="action" href="#"><i class="pe-7s-like"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="product-info">
+                            <div class="single-info">
+                                <span class="lable">Nom:</span>
+                                <span class="value" th:text="${produit.libelle}"></span>
+                            </div>
+                            <div class="single-info">
+                                <span class="lable">Categorie:</span>
+                                <span class="value"><a th:text="${produit.typeProduit.nom}"></a></span>
+                            </div>
+                            <div class="single-info">
+                                <span class="lable">Famille:</span>
+                                <span class="value"><a href="#" th:text="${produit.categorie.libelle}"></a></span>
+                            </div>
+                            <div class="single-info">
+                                <span class="lable">Partager:</span>
+                                <ul class="social">
+                                    <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Details Description End -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Product Details Section End -->
+
+    <!-- Product Details tab Section Start -->
+    <div class="section section-padding-02">
+        <div class="container">
+
+            <!-- Product Details Tabs Start -->
+            <div class="product-details-tabs">
+                <ul class="nav justify-content-center">
+                    <li><button class="active" data-bs-toggle="tab" data-bs-target="#description">Description</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="description">
+                        <!-- Description Content Start -->
+                        <div class="description-content">
+                            <p th:text="${produit.description}"></p>
+                        </div>
+                        <!-- Description Content End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Product Details Tabs End -->
+
+        </div>
+    </div>
+    <!-- Product Details tab Section End -->
+
+    <!-- Sale Product Section Start -->
+    <div class="section section-padding mt-n1">
+        <div class="container">
+            <div class="">
+                <!-- Product Wrapper Start -->
+                <div class="product-wrapper product-active-02">
+
+                    <!-- Product Top Wrapper Start -->
+                    <div class="product-top-wrapper mt-n1">
+
+                        <!-- Section Title Start -->
+                        <div class="section-title">
+                            <h2 class="title"># Produits du même type</h2>
+                        </div>
+                        <!-- Section Title End -->
+                        <!-- Swiper Arrows End -->
+                        <div class="swiper-arrows">
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-prev"><i class="pe-7s-angle-left"></i></div>
+                            <div class="swiper-button-next"><i class="pe-7s-angle-right"></i></div>
+                        </div>
+                        <!-- Swiper Arrows End -->
+
+                    </div>
+                    <!-- Product Top Wrapper End -->
+
+                    <!-- Product Tabs Content Start -->
+                    <div class="product-tabs-content">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab7">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" th:each="prod : ${produits}">
+                                            <!-- Single Product Start -->
+                                            <div class="single-product">
+                                                <a th:href="@{/produit/details/{id}(id=${prod.idProduit})}"><img
+                                                        th:src="@{/images/produits/} + ${prod.images[0].chemin}"
+                                                        alt="produit" height="350px"></a>
+                                                <div class="product-content">
+                                                    <h4 class="title"><a
+                                                            th:href="@{/produit/details/{id}(id=${prod.idProduit})}"
+                                                            th:text="${prod.libelle}"></a></h4>
+                                                    <div class="price">
+                                                        <span class="sale-price"
+                                                            th:text="${prod.prix}"></span>&nbsp;<span
+                                                            class="sale-price"> FCFA</span>
+                                                    </div>
+                                                </div>
+                                                <ul class="product-meta">
+                                                    <li><a class="action"
+                                                            th:href="@{/produit/details/{id}(id=${produit.idProduit})}"><i
+                                                                class="pe-7s-search"></i></a></li>
+                                                    <li><button type="submit" class="action"><i
+                                                                class="pe-7s-shopbag"></i></button></li>
+                                                    <li><a class="action"
+                                                            th:href="@{/favorie/ajouter/{id}(id=${produit.idProduit})}"><i
+                                                                class="pe-7s-like"></i></a></li>
+                                                    <li><i class="copyright-text">
+                                                            <th:block th:text="${#lists.size(produit.favories)}">
+                                                            </th:block>
+                                                            &nbsp;<i class="pe-7s-like2"></i>
+                                                        </i></li>
+                                                </ul>
+                                            </div>
+                                            <!-- Single Product End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Tabs Content End -->
+
+                </div>
+                <!-- Product Wrapper End -->
+            </div>
+        </div>
+    </div>
+    <!-- Sale Product Section End -->
+    <!--Back To Start-->
+    <a href="#" class="back-to-top">
+        <i class="pe-7s-angle-up"></i>
+    </a>
+    <!--Back To End-->
+    <!-- JS
+    ============================================ -->
+
+    <!-- Modernizer & jQuery JS -->
+    <script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+    <script th:src="@{/js/plugins/ajax-contact.js}"></script>
+    <script th:src="@{/js/plugins/appear.js}"></script>
+    <script th:src="@{/js/plugins/odometer.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/js/plugins/select2.min.js}"></script>
+    <script th:src="@{/js/plugins/ion.rangeSlider.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.zoom.min.js}"></script>
+    <!-- <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script> -->
+    <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+    <!-- <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script> -->
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            function sucess(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            sucess("[[${success}]]");
+        </script>
+    </div>
+
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            function erreur(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            erreur("[[${error}]]");
+        </script>
+    </div>
+
+</body>
+
+</html>

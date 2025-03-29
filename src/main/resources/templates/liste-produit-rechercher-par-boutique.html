@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Marquet place</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.png}">
+
+    <!-- CSS
+	============================================ -->
+
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/pe-icon-7-stroke.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/minibootstrap.css}">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/odometer.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/ion.rangeSlider.min.css}">
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <link rel="stylesheet" href="../static/css/vendor/plugins.min.css">
+    <link rel="stylesheet" href="../static/css/style.min.css">
+     -->
+</head>
+
+<body>
+
+
+    <!-- importation du menu -->
+    <th:block th:insert="fragments/menu.html :: menu"></th:block>
+    <!-- fin importation du menu -->
+
+    <!-- Page Banner Section Start -->
+    <div class="section page-banner-section" style="background-image: url(/images/page-banner.jpg);">
+        <div class="container">
+
+            <!-- Page Banner Content End -->
+            <div class="page-banner-content">
+                <h2 class="title" th:text="${boutique.nom}"></h2>
+
+                <ul class="breadcrumb">
+                    <li><a th:href="@{/produit/liste/0}">Acceuil</a></li>
+                    <li class="active" th:text="${boutique.slogan}"></li>
+                </ul>
+            </div>
+            <!-- Page Banner Content End -->
+
+        </div>
+    </div>
+    <!-- Page Banner Section End -->
+    <!-- -----------------------------------------SECTION DE D'INTERIEURE DE PAGE------------------------------------- -->
+
+
+    <!-- Shop Section Start -->
+    <div class="section section-padding mt-n10">
+        <div class="container">
+
+            <div class="row flex-row-reverse">
+                <div class="col-lg-9">
+                    <!-- Shop top Bar Start -->
+                    <div class="shop-top-bar">
+                        <div class="shop-text">
+                            <p><span th:text="${total}"></span> articles à afficher</p>
+                        </div>
+                        <div class="shop-tabs">
+                            <ul class="nav">
+                                <li><button class="active" data-bs-toggle="tab" data-bs-target="#grid"><i
+                                            class="fa fa-th"></i></button></li>
+                                <li><button data-bs-toggle="tab" data-bs-target="#list"><i
+                                            class="fa fa-list"></i></button></li>
+                            </ul>
+                        </div>
+                        <div class="shop-sort">
+                            <span class="title">Trier par :</span>
+                            <select class="nice_select">
+                                <option value="1">Categories</option>
+                                <option value="2">Categories</option>
+                                <option value="3">Categories</option>
+                                <option value="4">Categories</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Shop top Bar End -->
+
+                    <div class="tab-content">
+                        <!-- ---------------SECTION PAR GRIDS------------------------------------ -->
+                        <div class="tab-pane fade show active" id="grid">
+
+                            <!-- Shop Product Wrapper Start -->
+                            <div class="shop-product-wrapper">
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-6" th:each="produit : ${produits}">
+                                        <!-- Single Product Start -->
+                                        <div class="single-product">
+                                            <form th:action="@{/panier/add}" method="post">
+                                                <img th:src="@{/images/produits/} + ${produit.images[0].chemin}"
+                                                    alt="produit" height="350px">
+                                                <div class="product-content">
+                                                    <h4 class="title"><a><span th:text="${produit.libelle}"></span></a>
+                                                    </h4>
+                                                    <div class="price">
+                                                        <span class="sale-price"
+                                                            th:text="${produit.prix}"></span>&nbsp;<span
+                                                            class="sale-price"> FCFA</span>
+                                                        <input type="hidden" th:value="${produit.idProduit}" name="id">
+                                                        <input type="hidden" value="1" name="quantite">
+                                                    </div>
+                                                </div>
+                                                <ul class="product-meta">
+                                                    <li><a class="action"
+                                                            th:href="@{/produit/details/{id}(id=${produit.idProduit})}"><i
+                                                                class="pe-7s-search"></i></a></li>
+                                                    <li><button type="submit" class="action"><i
+                                                                class="pe-7s-shopbag"></i></button></li>
+                                                    <li><a class="action"
+                                                            th:href="@{/favorie/ajouter/{id}(id=${produit.idProduit})}"><i
+                                                                class="pe-7s-like"></i></a></li>
+                                                    <li><i class="copyright-text">
+                                                            <th:block th:text="${#lists.size(produit.favories)}">
+                                                            </th:block>
+                                                            &nbsp;<i class="pe-7s-like2"></i>
+                                                        </i></li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                        <!-- Single Product End -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Shop Product Wrapper End -->
+
+                        </div>
+
+                        <!-- ---------------SECTION PAR LISTE------------------------------------ -->
+                        <div class="tab-pane fade" id="list">
+
+                            <!-- Shop Product Wrapper Start -->
+                            <div class="shop-product-wrapper">
+
+                                <!-- Single Product Start -->
+                                <div class="single-product-02 product-list" th:each="produit: ${produits}">
+                                    <div class="product-images">
+                                        <form th:action="@{/panier/add}" method="post" id="part2">
+                                            <input type="hidden" th:value="${produit.idProduit}" name="id">
+                                            <input type="hidden" value="1" name="quantite">
+                                            <a th:href="@{/produit/details/{id}(id=${produit.idProduit})}"><img
+                                                    th:src="@{/images/produits/} + ${produit.images[0].chemin}"
+                                                    alt="product" height="350px"></a>
+                                            <ul class="product-meta">
+                                                <li><a class="action"
+                                                        th:href="@{/produit/details/{id}(id=${produit.idProduit})}"><i
+                                                            class="pe-7s-search"></i></a></li>
+                                                <li><button type="submit" class="action"><i
+                                                            class="pe-7s-shopbag"></i></button></li>
+                                                <li><a class="action"
+                                                        th:href="@{/favorie/ajouter/{id}(id=${produit.idProduit})}"><i
+                                                            class="pe-7s-like"></i></a></li>
+                                                <li><i class="copyright-text">
+                                                        <th:block th:text="${#lists.size(produit.favories)}"></th:block>
+                                                        &nbsp;<i class="pe-7s-like2"></i>
+                                                    </i></li>
+                                            </ul>
+                                        </form>
+                                    </div>
+                                    <div class="product-content">
+                                        <h4 class="title"><a><span th:text="${produit.libelle}"></span></a></h4>
+                                        <div class="price">
+                                            <span class="sale-price" th:text="${produit.prix}"></span>&nbsp;<span
+                                                class="sale-price"> FCFA</span>
+                                        </div>
+                                        <p th:text="${produit.description}"></p>
+                                    </div>
+                                </div>
+                                <!-- Single Product End -->
+
+                            </div>
+                            <!-- Shop Product Wrapper End -->
+
+                        </div>
+                    </div>
+
+                    <!-- Page pagination Start -->
+                    <div class="page-pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:if="${pageCourante != 0}">
+                                <a class="page-link"
+                                    th:href="@{/boutique/rechercher/boutique/liste/{pageNo}?libelle={libelle}?boutique={idBoutique}(pageNo=${pageCourante - 1}, boutique=${idBoutique})}"><i
+                                        class="fa fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(1, total)}"
+                                th:classappend="${pageCourante == i - 1 ? 'active' : ''}">
+                                <a th:href="@{/boutique/rechercher/boutique/liste/{pageNo}?libelle={libelle}?boutique={idBoutique}(pageNo=${i - 1}, boutique=${idBoutique})}"
+                                    class="page-link" href="#"><span th:text="${i}"></span></a>
+                            </li>
+                            <li class="page-item" th:if="${pageCourante + 1 != total}">
+                                <a th:href="@{/boutique/rechercher/boutique/liste/{pageNo}?libelle={libelle}?boutique={idBoutique}(pageNo=${pageCourante + 1}, boutique=${idBoutique})}"
+                                    class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Page pagination End -->
+
+                </div>
+                <div class="col-lg-3">
+
+                    <!-- Sidebar Start -->
+                    <div class="sidebar">
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+                            <div class="widget-search">
+                                <form th:action="@{/produit/rechercher/boutique/liste/0}" method="get">
+                                    <input type="text" name="libelle" placeholder="entrer l'article a rechercher">
+                                    <input type="hidden" name="boutique" th:value="${idBoutique}">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Filtrer par Categories</h4>
+                            <div class="widget-checkbox widget-categories">
+                                <ul class="checkbox-items">
+                                    <li>
+                                        <input type="checkbox" id="checkbox1">
+                                        <label for="checkbox1"> <span></span>Categories</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox2">
+                                        <label for="checkbox2"> <span></span>Categories</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox3">
+                                        <label for="checkbox3"> <span></span>Categories</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox4">
+                                        <label for="checkbox4"> <span></span>Categories</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox5">
+                                        <label for="checkbox5"> <span></span>Categories</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox6">
+                                        <label for="checkbox6"> <span></span>Categories</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Pofiner la selection</h4>
+
+                            <div class="widget-checkbox">
+                                <ul class="checkbox-items">
+                                    <li>
+                                        <input type="checkbox" id="checkbox8">
+                                        <label for="checkbox8"> <span></span>En solde Sale</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox9">
+                                        <label for="checkbox9"> <span></span>Nouvautée</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox10">
+                                        <label for="checkbox10"> <span></span>En stock</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Filter par prix</h4>
+
+                            <div class="widget-price">
+                                <input id="price-range" type="text">
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Filter By Color</h4>
+
+                            <div class="widget-checkbox">
+                                <ul class="checkbox-items">
+                                    <li>
+                                        <input type="checkbox" id="checkbox11">
+                                        <label for="checkbox11"> <span class="color-blue"></span>Blue</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox12">
+                                        <label for="checkbox12"> <span class="color-dark-blue"></span>Dark Blue</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox13">
+                                        <label for="checkbox13"> <span class="color-gray"></span>Gray</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox14">
+                                        <label for="checkbox14"> <span class="color-green"></span>Green</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox15">
+                                        <label for="checkbox15"> <span class="color-gray-dark"></span>Light
+                                            Black</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox16">
+                                        <label for="checkbox16"> <span class="color-lower-blue"></span>Lower
+                                            Blue</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Taille</h4>
+
+                            <div class="widget-checkbox">
+                                <ul class="checkbox-items">
+                                    <li>
+                                        <input type="checkbox" id="checkbox17">
+                                        <label for="checkbox17"> <span></span>S</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox18">
+                                        <label for="checkbox18"> <span></span>M</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox19">
+                                        <label for="checkbox19"> <span></span>Xl</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox20">
+                                        <label for="checkbox20"> <span></span>XXL</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+
+                        <!-- Sidebar Widget Start -->
+                        <div class="sidebar-widget">
+
+                            <h4 class="widget-title">Tags</h4>
+
+                            <div class="widget-tags">
+                                <ul class="tags-list">
+                                    <li><a href="#">Vetements</a></li>
+                                    <li><a href="#">Accessoires</a></li>
+                                    <li><a href="#">Pour Hommes</a></li>
+                                    <li><a href="#">Femmes</a></li>
+                                    <li><a href="#">Tendance</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar Widget End -->
+                    </div>
+                    <!-- Sidebar End -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Shop Section End -->
+
+
+    <!-- -----------------------------------------SECTION DE D'INTERIEURE DE PAGE------------------------------------- -->
+
+    <!-- Footer Section Start -->
+    <div class="section footer-section">
+
+        <!-- Footer Top Start -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-2 col-md-4">
+
+                        <!-- Footer Logo Start -->
+                        <div class="footer-logo">
+                            <a href="index.html"><img th:src="@{/images/logo.png}" alt="Logo"></a>
+                        </div>
+                        <!-- Footer Logo End -->
+
+                    </div>
+                    <div class="col-xl-5 col-md-8">
+
+                        <!-- Footer Contact & Payment End -->
+                        <div class="footer-contact-payment">
+                            <div class="footer-contact">
+                                <div class="contact-icon">
+                                    <img th:src="@{/images/icon/icon-4.png}" alt="Icon">
+                                </div>
+
+                                <div class="contact-content">
+                                    <h6 class="title">Contacter Nous:</h6>
+                                    <p>+237 656437088</p>
+                                </div>
+                            </div>
+                            <div class="footer-payment">
+                                <img th:src="@{/images/payment.png}" alt="Payment">
+                            </div>
+                        </div>
+                        <!-- Footer Contact & Payment End -->
+
+                    </div>
+                    <div class="col-xl-5 ">
+
+                        <!-- Footer Subscribe End -->
+                        <div class="footer-subscribe">
+                            <span class="title">Inscrivez vous Maintenant :</span>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Votre Mail">
+                                    <button><i class="pe-7s-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Footer Subscribe End -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Top End -->
+
+        <!-- Footer Widget Section Start -->
+        <div class="footer-widget-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Nos services</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">Payment Methods</a></li>
+                                <li><a href="#">Money-back guarantee!</a></li>
+                                <li><a href="#">Returns-Shipping</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Information</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">About Furbar</a></li>
+                                <li><a href="#">How to Shop</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Contact us</a></li>
+                                <li><a href="#">Log in</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">My Account</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="#">View Cart</a></li>
+                                <li><a href="#">My Wishlist</a></li>
+                                <li><a href="#">Track My Order</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-2 col-md-5 col-sm-6">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">Our Stores</h4>
+
+                            <ul class="footer-link">
+                                <li><a href="#">New aYork</a></li>
+                                <li><a href="#">London SF</a></li>
+                                <li><a href="#">Cockfosters BP</a></li>
+                                <li><a href="#">Los Angeles</a></li>
+                                <li><a href="#">Chicago</a></li>
+                            </ul>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                    <div class="col-lg-3 col-md-7">
+                        <!-- Footer Widget Start -->
+                        <div class="footer-widget">
+                            <h4 class="footer-widget-title">About Us</h4>
+
+                            <div class="widget-about">
+                                <p>Duo d'etudiant engager pour vous permettres D'ameliorer le chifre d'affaire de vos
+                                    boutiques</p>
+                            </div>
+                            <div class="widget-social">
+                                <ul>
+                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-tumblr"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Footer Widget End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Widget End -->
+
+        <!-- Footer Copyright End -->
+        <div class="copyright">
+            <div class="container">
+                <div class="copyright-text">
+                    <p>&copy; 2023 <span> ShopyMarket </span> Fais avec le ❤️ par <a href="https://hasthemes.com/"
+                            target="_blank">Bryan-Kadji</a></p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Copyright End -->
+
+    </div>
+    <!-- Footer Section End -->
+
+    <!-- JS
+============================================ -->
+
+    <!-- Modernizer & jQuery JS -->
+    <script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <!-- Plugins JS -->
+    <script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+    <script th:src="@{/js/plugins/ajax-contact.js}"></script>
+    <script th:src="@{/js/plugins/appear.js}"></script>
+    <script th:src="@{/js/plugins/odometer.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.nice-select.min.js}"></script>
+    <script th:src="@{/js/plugins/select2.min.js}"></script>
+    <script th:src="@{/js/plugins/ion.rangeSlider.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.zoom.min.js}"></script>
+
+    <!-- <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script> -->
+    <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            function sucess(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            sucess("[[${success}]]");
+        </script>
+    </div>
+
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            function erreur(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            erreur("[[${error}]]");
+        </script>
+    </div>
+</body>
+
+</html>

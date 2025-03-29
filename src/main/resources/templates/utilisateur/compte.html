@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Espace Boutiquier/compte</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script th:src="@{/new/jquery/dist/jquery.slim.min.js}"></script>
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <script th:src="@{/js/all.js}" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4" th:text="${utilisateurInformations}"></h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Compte</li>
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-12">
+                            <div class="card bg-dark text-white mb-4">
+                                <div class="card-body">Gérer mes Articles</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="text-white stretched-link" th:href="@{/produit/liste-produits/0}">J'y
+                                        vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-12">
+                            <div class="card bg-dark text-white mb-4">
+                                <div class="card-body">Voir mes paiements en attentes</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" th:href="@{/utilisateur/paiement/attente}">J'y
+                                        vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-12">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Tableau de bord</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" th:href="@{/home}">J'y vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-12">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Mon espace publicité</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" href="#">J'y vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container bg-light" style="box-shadow: 20px 10px 7px rgba(0, 0, 0, 0.5); ">
+                        <h1 class="title text-center">GERER VOTRE COMPTE</h1>
+                        <div class="container">
+                            <th:block th:if="${telephone1}">
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <h5 class="title">Valider votre premier numéro</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <span class="title" th:text="${utilisateur.telephone1}"></span>&nbsp;<a
+                                            th:href="@{/utilisateur/activer/telephone1}" class=" btn btn-success">Vérifier</a>
+                                    </div>
+                                </div>
+                                <br>
+                            </th:block>
+                            <th:block th:if="${telephone2}">
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <h5 class="title">Valider votre deuxieme numéro</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <span class="title" th:text="${utilisateur.telephone2}"></span>&nbsp;<a
+                                            th:href="@{/utilisateur/activer/telephone2}" class="btn btn-success">Vérifier</a>
+                                    </div>
+                                </div>
+                                <br><br>
+                            </th:block>
+                            <th:block th:if="${adresseVide}">
+                                <div class="account-details">
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <h5 class="title">Définissez vos adresses</h5>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <form th:action="@{/adresse/utilisateur/ajouter}" method="post">
+                                        <div class="col-md-12">
+                                            <select class="form-control" th:name="adresse" id="adresse1-1"
+                                                placeholder="dans le cadre">
+                                                <option value="" class="form-control">veillez spécifier
+                                                    la premiere adresse </option>
+                                                <th:block th:each="adresse : ${adresses}">
+                                                    <option th:value="${adresse.idAdresse}"
+                                                        th:text="${adresse.localisation}" class="form-control"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <select class="form-control" th:name="adresse" id="adresse2-1"
+                                                placeholder="dans le cadre">
+                                                <option value="" class="form-control">veillez spécifier
+                                                    la deuxieme adresse</option>
+                                                <th:block th:each="adresse : ${adresses}">
+                                                    <option th:value="${adresse.idAdresse}"
+                                                        th:text="${adresse.localisation}" class="form-control"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <div class="single-form">
+                                                <button class="btn btn-success btn-hover-dark">Enregistrer</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <br>
+                                </div>
+                                <br><br>
+                            </th:block>
+                            <div class="col-md-12">
+                                <div class="single-form">
+                                    <h5 class="title">Changer votre mot de passe</h5>
+                                </div>
+                            </div>
+                            <br>
+                            <form th:action="@{/utilisateur/modifier/password}" method="post">
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <input class="form-control" type="password" name="nouveau"
+                                            placeholder="Nouveau Mot de Passe" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <input class="form-control" type="password" name="confirmer"
+                                            placeholder="Confirmez Nouveau Mot de Passe" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-12">
+                                    <div class="single-form">
+                                        <button class="btn btn-success btn-hover-dark">Enregistrer les
+                                            changements</button>
+                                    </div>
+                                </div>
+                                <br><br>
+                            </form>
+                            <div class="col-md-12">
+                                <div class="single-form">
+                                    <h5 class="title">Modifier vos Informations</h5>
+                                </div>
+                            </div>
+                            <br>
+                            <form th:action="@{/utilisateur/modifier}" method="post" th:object="${utilisateur}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <label for="nom">prenom:</label>
+                                            <input class="form-control" th:field="${utilisateur.prenom}" type="text"
+                                                th:value="${utilisateur.prenom}" placeholder="Prénom" required>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <label for="nom">nom:</label>
+                                            <input class="form-control" th:field="${utilisateur.nom}" type="text"
+                                                th:value="${utilisateur.nom}" placeholder="Nom" required>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <label for="date">date de naissance:</label>
+                                            <input class="form-control" th:field="${utilisateur.dateNaissance}"
+                                                type="date" th:value="${utilisateur.dateNaissance}"
+                                                placeholder="date de naissance" required>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <label for="tel1">numéro de téléphone 1:</label>
+                                            <input class="form-control" th:field="${utilisateur.telephone1}"
+                                                type="number" th:value="${utilisateur.telephone1}"
+                                                placeholder="numéro téléphone 1" required>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <label for="tel2">numéro de téléphone 2:</label>
+                                            <input class="form-control" th:field="${utilisateur.telephone2}"
+                                                type="number" th:value="${utilisateur.telephone2}"
+                                                placeholder="numéro téléphone 2" required>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <button type="submit" class="btn btn-success btn-hover-dark">Enregistrer les
+                                                changements</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <th:block th:unless="${adresseVide}">
+                                <!-- les adresses -->
+                                <div class="account-details">
+                                    <div class="col-md-12">
+                                        <div class="single-form">
+                                            <h5 class="title">Modifier vos adresses</h5>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <form th:action="@{/adresse/utilisateur/modifier}" method="post">
+                                        <div class="col-md-12">
+                                            <select class="form-control" th:name="adresse1" id="adresse1" required>
+                                                <option value="" class="form-control">modifier la
+                                                    premiere adresse</option>
+                                                <th:block th:each="adresse : ${adresses}">
+                                                    <option th:value="${adresse.idAdresse}"
+                                                        th:text="${adresse.localisation}" class="form-control"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <select class="form-control" th:name="adresse2" id="adresse2">
+                                                <option value="" class="form-control">modifier la
+                                                    deuxieme adresse</option>
+                                                <th:block th:each="adresse : ${adresses}">
+                                                    <option th:value="${adresse.idAdresse}"
+                                                        th:text="${adresse.localisation}" class="form-control"></option>
+                                                </th:block>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <div class="single-form">
+                                                <button class="btn btn-success btn-hover-dark">Enregistrer</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <br>
+                                </div>
+                            </th:block>
+                            <!--  -->
+                            </form><br>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </main>
+            <br><br><br>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; SoftWear 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!--modal  -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">quel poste souhaitez vous recruter?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class="row" method="post" action="/utilisateur/recrute">
+                        <div class="form-group">
+                            <label for="poste">Poste à rechercher pour vous: </label>
+                            <input type="text" name="poste" class="form-control" id=""
+                                placeholder="quel poste voulez-vous rechercher">
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Demander le recrutement</button>
+                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- fin modal  -->
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:src="@{/js/Chart.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/assets/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/assets/demo/chart-bar-demo.js}"></script>
+    <script th:src="@{/js/simple-datatables.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/js/datatables-simple-demo.js}"></script>
+    <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/new/lightslider.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- notification reussite -->
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            function sucess(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            sucess("l\'opération a été réalisée avec succès");
+        </script>
+    </div>
+    <!-- notification reussite -->
+
+    <!-- notification dechec -->
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            function erreur(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: message,
+                    showConfirmButton: true,
+                    timer: 5000
+                })
+            }
+            erreur("une erreur s'est produite veillez réessayer plus tard !");
+        </script>
+    </div>
+    <!-- fin notification dechec -->
+
+</body>
+
+</html>

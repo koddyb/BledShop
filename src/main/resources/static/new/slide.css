@@ -1,0 +1,85 @@
+ul{
+    list-style: none;
+
+}
+a{
+    text-decoration: none;
+}
+.container{
+    background-image: url();
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: left;
+    justify-content: center;
+    align-items: center;
+}
+
+.carte{
+    width: 350px;
+    height: 600px;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow:2px 10px 12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin: 20px 10px;
+}
+.modele{
+    height: 250px;
+    max-height: 100%;
+    max-width: 100%;
+}
+.division{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+.division p{
+    color: snow;
+    text-align: center;
+    margin-top: 20px;
+}
+.division h1{
+    color:aqua;
+    align-items: center;
+}
+.sneakers{
+    color: rgb(105, 99, 99);
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+.logo{
+    width: 20px;
+}
+.carte:hover{
+    background-color: green;
+    transform-style: preserve-3d;
+    transform: scale(1.02);
+    transition: all ease 0.3s;
+}
+.carte:hover .sneakers{
+    color: snow;
+    transition: 0.5s;
+}
+@media(max-width:720px){
+    .carte{
+        width: 94%;
+        height: 560px;
+    }
+    .modele{
+        height: 250px;
+
+    }
+    .division{
+        font-size: 16px;
+        width: 250px;
+    }
+}

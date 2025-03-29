@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.min.js}"></script>
+    <title>Document</title>
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 72px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        p {
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+    <div class="container mt-5">
+        <h1 class="text-center">Oups! Erreur <span style="color:green">5</span><span style="color:red">0</span><span style="color:blue">0</span></h1>
+        <p class="text-center">une erreur s'est produite avec le serveur désolé nous corrigerons cela le plus tot possible !</p>
+    </div>
+    </div>
+</body>
+</html>

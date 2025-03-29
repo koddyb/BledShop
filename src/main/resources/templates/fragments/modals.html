@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+        <script th:src="@{/new/jquery/dist/jquery.slim.min.js}"></script>
+        <script th:src="@{/js/plugins/popper.min.js}"></script>
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+      </head>
+<body>
+
+    <div class="container">
+        <h2>Fading Modal</h2>
+      
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          Open modal
+        </button>
+      
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Code de la livraison</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+                <form class="row g-3">
+                    <div class="col-auto">
+                      <input type="text" class="form-control" id="" placeholder="code du client">
+                    </div>
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-primary mb-3">Confirmer le code</button>
+                    </div>
+                  </form>
+              </div>
+              
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+</body>
+</html>

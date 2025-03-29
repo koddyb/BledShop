@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Creer Mon Article</title>
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script th:src="@{/new/jquery/dist/jquery.slim.min.js}"></script>
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <script th:src="@{/js/all.js}" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Soft Market</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                    class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                        aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                            class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <!-- <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">Mon Compte</a></li>
+                            <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                </ul> -->
+    
+            <ul class="navbar-nav me-3 me-lg-4">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" id="" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-user fa-fw"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="boutiquier">
+                        <li><a class="dropdown-item" th:href="@{/utilisateur/compte}">Mon Compte</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- fin -->
+        </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Charts</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
+                            <li class="breadcrumb-item active">Choisir votre Categorie Article</li>
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                vous devez choisir le type ou la categorie qui décrit le mieux l'article que vous êtes sur le point de créer afin de permettre a vos future clients de mieux se repérer pour améliorer la notoriété de votre boutique
+                            </div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-md-4 g-4">
+                            <div class="col"  th:each="categorie: ${categories}">
+                              <div class="card">
+                                <a th:href="@{/produit/creer(categorie=${categorie.idCategorie})}"><img th:src="@{/images/}+${categorie.image}" class="card-img-top" height="300" alt="..."></a>
+                                <div class="card-body">
+                                    <a th:href="@{/produit/creer(categorie=${categorie.idCategorie})}"><h5 class="card-title " th:text="${categorie.libelle}"></h5></a>
+                                  <p class="card-text" th:text="${categorie.description}"></p>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
+        <script th:src="@{/js/scripts.js}"></script>
+        <script th:src="@{/js/Chart.min.js}" crossorigin="anonymous"></script>
+        <script th:src="@{/assets/demo/chart-area-demo.js}"></script>
+        <script th:src="@{/assets/demo/chart-bar-demo.js}"></script>
+        <script th:src="@{/js/simple-datatables.min.js}" crossorigin="anonymous"></script>
+        <script th:src="@{/js/datatables-simple-demo.js}"></script>
+        <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/lightslider.js}"></script>
+        <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+        <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+        <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+        <!-- Main JS -->
+        <script th:src="@{/js/main.js}"></script>
+    
+        <div th:if="${success}">
+            <script th:inline="javascript">
+                function sucess(message){
+                  Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title:  message,
+        showConfirmButton: false,
+        timer: 5000
+      })
+                }
+                sucess("[[${success}]]");
+            </script>
+        </div>
+    
+            <div th:if="${error}">
+                <script th:inline="javascript">    
+                    function erreur(message){
+                      Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title:  message,
+            showConfirmButton: false,
+            timer: 5000
+          })
+                    }
+                    erreur("[[${error}]]");
+                </script> 
+            </div>
+    </body>
+</html>

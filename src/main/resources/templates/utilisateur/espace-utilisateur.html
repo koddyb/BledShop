@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Espace Boutiquier/utilisateur</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script th:src="@{/new/jquery/dist/jquery.slim.min.js}"></script>
+    <script th:src="@{/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <script th:src="@{/js/all.js}" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="/">
+        <h2>bled_shop</h2></a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <!-- <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Mon Compte</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Déconnexion</a></li>
+                    </ul>
+                </li>
+            </ul> -->
+
+        <ul class="navbar-nav me-3 me-lg-4">
+            <li class="dropdown">
+                <a class="nav-link dropdown-toggle" id="" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="boutiquier">
+                    <li><a class="dropdown-item" th:href="@{/utilisateur/compte}">Mon Compte</a></li>
+                    <li><a class="dropdown-item" th:href="@{/logout}">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- fin -->
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Accueil
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Ma Boutique</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Mes Articles
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/produit/commencer}">Ajouter un article</a>
+                                <a class="nav-link" th:href="@{/produit/liste-produits/0}">Voir mes Articles</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                            aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Mes Ventes
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
+                                    aria-controls="pagesCollapseAuth">
+                                    Mes Commandes
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" th:href="@{/utilisateur/commande/attente}">Commandes en
+                                            attentes</a>
+                                        <a class="nav-link" th:href="@{/utilisateur/commande/livrer}">Comandes
+                                            Livrées</a>
+                                        <a class="nav-link"
+                                            th:href="@{/utilisateur/commande/liste-commandes}">Historique de mes
+                                            commandes</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
+                                    aria-controls="pagesCollapseError">
+                                    Mes Paiements
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" th:href="@{/utilisateur/paiement/attente}">Paiements en
+                                            attentes</a>
+                                        <a class="nav-link" th:href="@{/utilisateur/paiement/recu}">Paiements recus</a>
+                                        <a class="nav-link"
+                                            th:href="@{/utilisateur/paiement/liste-paiements}">Historique de mes
+                                            Paiements</a>
+                                    </nav>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="sb-sidenav-menu-heading">Services</div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Booster Ma Boutique
+                        </a>
+                        <a class="nav-link" data-toggle="modal" data-target="#myModal">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            je recrute
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <div id="layoutSidenav_content">
+            <main>
+                <div th:if="${error}">
+                    <div class="alert alert-danger" th:text="${error}"></div>
+                </div>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Espace Boutiquier</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active" th:text="${utilisateur.nom }"></li>
+                        <li class="breadcrumb-item active" th:text="${utilisateur.prenom }"></li>
+                    </ol>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger" th:text="${param.error}"></div>
+                    </div>
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info" th:text="${param.success}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-dark text-white mb-4">
+                                <div class="card-body">Gérer mes Articles</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="text-white stretched-link" th:href="@{/produit/liste-produits/0}">J'y
+                                        vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-dark text-white mb-4">
+                                <div class="card-body">Voir mes paiements en attentes</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" th:href="@{/utilisateur/paiement/attente}">J'y
+                                        vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Modifier mes imformations</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" th:href="@{/utilisateur/compte}">J'y vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Mon espace publicité</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class=" text-white stretched-link" href="#">J'y vais</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Historique de mes Commandes
+                        </div>
+                        <th:block th:if="${commandes  == null}">
+                            <h2 class="title">Vous n'avez eu aucune commande jusqu'ici</h2>
+                        </th:block>
+                        <div th:unless="${commandes  == null}">
+                            <div class="container">
+                                <div class="table-responsive table-hover">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date Commande</th>
+                                                <th>Adresse client</th>
+                                                <th>e-mail client</th>
+                                                <th>numéro client</th>
+                                                <th>Date promise</th>
+                                                <th>Date butoire</th>
+                                                <th>montant</th>
+                                                <th>état commande</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="commande : ${commandes}">
+                                                <td th:text="${commande.dateCommande}"></td>
+                                                <td th:text="${commande.livraison.lieu}"></td>
+                                                <td th:text="${commande.client.email}"></td>
+                                                <td th:text="${commande.moyenPaiement}"></td>
+                                                <td th:text="${commande.livraison.dateLivraison}"></td>
+                                                <td th:text="${commande.dateButoire}"></td>
+                                                <td th:text="${commande.prix}"></td>
+                                                <td th:text="${commande.etat}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <th:block th:if="${invalide}">
+                    <p class="alert alert-warning">important : <strong
+                            th:text="${utilisateur.prenom}"></strong> <span th:text="${invalide}"></span>
+                    </p>
+                </th:block>
+                <th:block th:if="${telephone1}">
+                    <p class="alert alert-warning">important : <strong
+                            th:text="${utilisateur.prenom}"></strong> <span th:text="${telephone1}"></span><a class="dropdown-item" th:href="@{/utilisateur/compte}">ici👈</a>
+                </th:block>
+                <th:block th:if="${telephone2}">
+                    <p class="alert alert-warning">important : <strong
+                            th:text="${utilisateur.prenom}"></strong> <span th:text="${telephone2}"></span>
+                    </p>
+                </th:block>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; SoftWear 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!--modal  -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered text-center d-flex justify-content-center">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">quel poste souhaitez vous recruter?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class="row" method="post" action="/utilisateur/recrute">
+                        <div class="form-group">
+                            <label for="poste">Poste à rechercher pour vous: </label>
+                            <input type="text" name="poste" class="form-control" id=""
+                                placeholder="quel poste voulez-vous rechercher" required>
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Demander le recrutement</button>
+                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- fin modal  -->
+
+
+    <script th:src="@{/js/bootstrap.bundle.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <script th:src="@{/js/Chart.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/assets/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/assets/demo/chart-bar-demo.js}"></script>
+    <script th:src="@{/js/simple-datatables.min.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/js/datatables-simple-demo.js}"></script>
+    <script type="text/javascript" th:src="@{/new/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/new/lightslider.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/new/sweetalert2/node_modules/sweetalert2/dist/sweetalert2.all.min.js}"></script>
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <script th:src="@{/js/plugins.min.js"></script> -->
+    <!-- Main JS -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- notification reussite -->
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            function sucess(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: message,
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            }
+            sucess("l\'opération a été réalisée avec succès");
+        </script>
+    </div>
+    <!-- notification reussite -->
+
+    <!-- notification dechec -->
+    <div th:if="${error}">
+        <script th:inline="javascript">
+            function erreur(message) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: message,
+                    showConfirmButton: true,
+                    timer: 5000
+                })
+            }
+            erreur("une erreur s'est produite veillez réessayer plus tard !");
+        </script>
+    </div>
+    <!-- fin notification dechec -->
+
+</body>
+
+</html>

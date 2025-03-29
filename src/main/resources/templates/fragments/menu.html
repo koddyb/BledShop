@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- menu proprement dit -->
+
+    <th:block th:fragment="menu">
+        <!-- Header Start  -->
+        <div class="header-area header-sticky d-none d-lg-block">
+            <div class="container position-relative">
+                <div class="row align-items-center">
+                    <div class="col-lg-3">
+                        <!-- Header Logo Start -->
+                        <div class="header-logo">
+                            <a href="/"><img th:src="@{/images/logo.jpg}" class="mx-2" alt="Logo"></a>
+                        </div>
+                        <!-- Header Logo End -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header-menu">
+                            <ul class="nav-menu">
+                                <!-- <li>
+                                    <a href="#">Acceuil</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="index.html">Acceuil 01</a></li>
+                                        <li><a href="index-2.html">Acceuil 02</a></li>
+                                    </ul>
+                                </li> -->
+
+                                <li>
+                                    <a href="#">Catégories<i class="fa fa-chevron-down"></i></a>
+                                    <ul class="mega-sub-menu">
+                                        <li>
+                                            <a class="menu-title">Vêtements </a>
+                                            <ul class="menu-item">
+                                                <li th:each="vetement : ${vetements}">
+                                                    <a th:href="@{/produit/liste/0/} + ${vetement.nom}"
+                                                        th:text="${vetement.nom}"></a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="menu-title">Chaussures</a>
+
+                                            <ul class="menu-item">
+                                                <li th:each="chaussure : ${chaussures}">
+                                                    <a th:href="@{/produit/liste/0/} + ${chaussure.nom}"
+                                                        th:text="${chaussure.nom}"></a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="menu-title">Accessoires</a>
+
+                                            <ul class="menu-item">
+                                                <li th:each="accessoire : ${accessoires}">
+                                                    <a th:href="@{/produit/liste/0/} + ${accessoire.nom}"
+                                                        th:text="${accessoire.nom}"></a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="manu-banner">
+                                            <a href="#"><img th:src="@{/images/banner-menu-01.jpg}" alt=""></a>
+                                        </li>
+                                        <li class="manu-banner">
+                                            <a href="#"><img th:src="@{/images/banner-menu-02.jpg}" alt=""></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Produits</a>
+                                    <ul class="sub-menu">
+                                        <li><a th:href="@{/produit/liste/vendus/0}">Les plus vendus</a></li>
+                                        <li><a th:href="@{/produit/liste/0}">Tout les articles</a></li>
+                                        <li><a th:href="@{/produit/liste/notes/0}">Les mieux notés</a></li>
+                                        <li><a th:href="@{/produit/liste/favorie/0}">mes Favories</a></li>
+                                        <li><a href="/">Recommander pour moi</a></li>
+                                        <li><a href="/">les plus consulter</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Boutiques</a>
+                                    <ul class="sub-menu">
+                                        <li><a th:href="@{/boutique/liste/0/Hommes}">Pour Hommes</a></li>
+                                        <li><a th:href="@{/boutique/liste/0/Femmes}">Pour Femmes</a></li>
+                                        <li><a th:href="@{/boutique/liste/0/Enfants}">Pour Enfants</a></li>
+                                        <li><a th:href="@{/boutique/liste/0/Mixte}">Mixte</a></li>
+                                        <li><a th:href="@{/boutique/liste/notes/0}">Les mieux notés</a></li>
+                                        <li><a href="/">les plus consulter</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/">À propos</a></li>
+                                <li><a href="/">Contact</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <!-- Header Meta Start -->
+                        <div class="header-meta">
+
+                            <div class="dropdown">
+                                <a class="action" href="#" role="button" data-bs-toggle="dropdown"> <i
+                                        class="pe-7s-search"></i> </a>
+
+                                <div class="dropdown-menu dropdown-search">
+                                    <!-- Header Search Start -->
+                                    <div class="header-search">
+                                        <th:block th:unless="${boutiques != null}">
+                                            <form th:action="@{/produit/recherche/liste/0}" method="get">
+                                                <input type="text" name="libelle"
+                                                    placeholder="Entrer votre mot de recherche ici..." required>
+                                                <button type="submit"><i class="pe-7s-search"></i></button>
+                                            </form>
+                                        </th:block>
+                                        <th:block th:if="${boutiques != null}">
+                                            <form th:action="@{/boutique/rechercher/liste/0}" method="get">
+                                                <input type="text" name="nom"
+                                                    placeholder="Entrer votre mot de recherche ici..." required>
+                                                <button type="submit"><i class="pe-7s-search"></i></button>
+                                            </form>
+                                        </th:block>
+                                    </div>
+                                    <!-- Header Search End -->
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="action" href="#" role="button" data-bs-toggle="dropdown"><i
+                                        class="pe-7s-user"></i></a>
+                                <th:block th:unless="${connected != null}">
+                                    <ul class="dropdown-menu dropdown-profile">
+                                        <li><a>invité</a></li>
+                                        <li><a th:href="@{/login}">Connexion</a></li>
+                                        <li><a th:href="@{/client/inscription}">Inscription</a></li>
+                                    </ul>
+                                </th:block>
+                                <th:block th:if="${connected != null}">
+                                    <ul class="dropdown-menu dropdown-profile">
+                                        <li><a class="text-center" th:text="${connected}"></a></li>
+                                        <li><a th:href="@{/compte}">Mon Tableau de Bord</a></li>
+                                        <li><a th:href="@{/logout}">Déconnexion</a></li>
+                                    </ul>
+                                </th:block>
+                            </div>
+
+                            <a class="action" th:href="@{/produit/liste/favorie/0}"><i class="pe-7s-like"></i></a>
+
+
+                            <div class="dropdown">
+                                <a class="action" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="pe-7s-shopbag"></i>
+                                    <th:block th:if="${nombreDeProduit}">
+                                        <span class="number" th:text="${nombreDeProduit}"></span>
+                                    </th:block>
+
+                                    <th:block th:unless="${nombreDeProduit}">
+                                        <span class="number">0</span>
+                                    </th:block>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-cart">
+                                    <th:block th:if="${panier}">
+                                        <div class="cart-content" id="cart-content">
+                                            <ul>
+                                                <li th:each="ligne: ${panier.lignePaniers}">
+                                                    <!-- Single Cart Item Start -->
+                                                    <div class="single-cart-item">
+                                                        <div class="cart-thumb">
+                                                            <img th:src="@{/images/produits/} + ${ligne.produit.images[0].chemin}"
+                                                                alt="article">
+                                                            <span class="product-quantity"
+                                                                th:text="${ligne.quantite} + x"></span>
+                                                        </div>
+                                                        <div class="cart-item-content">
+                                                            <h6 class="product-name" th:text="${ligne.produit.libelle}">
+                                                            </h6>
+                                                            <span class="product-price"
+                                                                th:text="${ligne.produit.prix} + FCFA"></span>
+                                                            <div class="attributes-content">
+                                                                <span><strong>Couleur:</strong>
+                                                                    <th:block
+                                                                        th:text="${ligne.produit.couleurs[0].nom}">
+                                                                    </th:block>
+                                                                </span>
+                                                            </div>
+                                                            <a class="cart-remove" href="#"><i
+                                                                    class="las la-times"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Single Cart Item End -->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </th:block>
+                                    <div class="cart-price">
+                                        <div class="cart-total">
+                                            <div class="price-inline">
+                                                <span class="label">Total</span>
+                                                <th:block th:if="${panier}">
+                                                    <span class="value" th:text="${panier.prixTotal} + FCFA"></span>
+                                                </th:block>
+                                                <th:block th:unless="${panier}">
+                                                    <span class="value">0.0 FCFA</span>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkout-btn">
+                                        <a th:href="@{/panier}"
+                                            class="btn btn-dark btn-hover-success d-block">Consulter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Header Meta End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Header Mobile Start -->
+        <div class="header-mobile section d-lg-none">
+
+            <!-- Header Mobile top Start -->
+            <div class="header-mobile-top header-sticky">
+                <div class="container">
+                    <div class="row row-cols-3 gx-2 align-items-center">
+                        <div class="col">
+
+                            <!-- Header Toggle Start -->
+                            <div class="header-toggle">
+                                <button class="mobile-menu-open">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                            <!-- Header Toggle End -->
+
+                        </div>
+                        <div class="col">
+
+                            <!-- Header Logo Start -->
+                            <div class="header-logo text-center">
+                                <a href="index.html"><img th:src="@{/images/logo.png}" alt="Logo"></a>
+                            </div>
+                            <!-- Header Logo End -->
+
+                        </div>
+                        <div class="col">
+
+                            <!-- Header Action Start -->
+                            <div class="header-meta">
+                                <div class="dropdown">
+                                    <a class="action" href="#" role="button" data-bs-toggle="dropdown"><i
+                                            class="pe-7s-user"></i></a>
+                                    <th:block th:unless="${connected != null}">
+                                        <ul class="dropdown-menu dropdown-profile">
+                                            <li><span class="text-center" align="center">invité</span></li>
+                                            <li><a th:href="@{/login}">Connexion</a></li>
+                                            <li><a th:href="@{/client/inscription}">Inscription</a></li>
+                                        </ul>
+                                    </th:block>
+                                    <th:block th:if="${connected != null}">
+                                        <ul class="dropdown-menu dropdown-profile">
+                                            <li><span class="text-center" align="center" th:text="${connected}"></span>
+                                            </li>
+                                            <li><a th:href="@{/client/dashboad}">Mon Tableau de Bord</a></li>
+                                            <li><a th:href="@{/logout}">Déconnexion</a></li>
+                                        </ul>
+                                    </th:block>
+                                </div>
+                                <a class="action" th:href="@{/panier}">
+                                    <i class="pe-7s-shopbag"></i>
+                                    <th:block th:if="${nombreDeProduit}">
+                                        <span class="number" th:text="${nombreDeProduit}"></span>
+                                    </th:block>
+
+                                    <th:block th:unless="${nombreDeProduit}">
+                                        <span class="number">0</span>
+                                    </th:block>
+                                </a>
+                            </div>
+                            <!-- Header Action End -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header Mobile top End -->
+
+            <!-- Header Mobile Bottom End -->
+            <div class="header-mobile-bottom">
+                <div class="container">
+
+                    <!-- Header Search Start -->
+                    <div class="header-search">
+                        <form action="#">
+                            <input type="text" placeholder="Saisir l'element de recherche... ">
+                            <button><i class="pe-7s-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- Header Search End -->
+
+                </div>
+            </div>
+            <!-- Header Mobile Bottom End -->
+
+        </div>
+        <!-- Header Mobile End -->
+
+        <!-- off Canvas Start -->
+        <div class="off-canvas-box">
+            <!-- Canvas Close bar Start -->
+            <div class="canvas-close-bar">
+                <span>Mon Menu</span>
+                <a class="menu-close" href="javascript:;"><i class="pe-7s-angle-left"></i></a>
+            </div>
+            <!-- Canvas Close bar End -->
+
+            <!-- Canvas Menu Start -->
+            <div class="canvas-menu">
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a>Vêtements</a>
+                            <ul class="sub-menu" th:each="vetement : ${vetements}">
+                                <li><a th:href="@{/produit/liste/0/} + ${vetement.nom}" th:text="${vetement.nom}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Chaussures</a>
+                            <ul class="sub-menu" th:each="chaussure : ${chaussures}">
+                                <a th:href="@{/produit/liste/0/} + ${chaussure.nom}" th:text="${chaussure.nom}"></a>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Accessoires</a>
+                            <ul class="sub-menu" th:each="accessoire : ${accessoires}">
+                                <a th:href="@{/produit/liste/0/} + ${accessoire.nom}" th:text="${accessoire.nom}"></a>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Boutiques</a>
+                            <ul class="mega-sub-menu">
+                                <li>
+                                    <a th:href="@{/boutique/liste/0/Hommes}" class="menu-title">Hommes</a>
+
+                                    <ul class="menu-item" th:each="categorie : ${categorieHomme}">
+                                        <li><a th:text="${categorie}"></a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a th:href="@{/boutique/liste/0/Femmes}" class="menu-title">Femmes</a>
+
+                                    <ul class="menu-item" th:each="categorie : ${categorieFemme}">
+                                        <li><a th:text="${categorie}"></a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a th:href="@{/boutique/liste/0/Enfants}" class="menu-title">Enfants</a>
+
+                                    <ul class="menu-item" th:each="categorie : ${categorieEnfant}">
+                                        <li><a th:text="${categorie}"></a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a th:href="@{/boutique/liste/0/Mixte}" class="menu-title">Mixte</a>
+
+                                    <ul class="menu-item" th:each="categorie : ${categorieMixte}">
+                                        <li><a th:text="${categorie}"></a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="manu-banner">
+                                    <a href="#"><img th:src="@{/images/banner-menu-01.jpg}" alt=""></a>
+                                </li>
+                                <li class="manu-banner">
+                                    <a href="#"><img th:src="@{/images/banner-menu-02.jpg}" alt=""></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Produits</a>
+                            <ul class="sub-menu">
+                                <li><a th:href="@{/produit/liste/vendus/0}">Les plus vendus</a></li>
+                                <li><a href="">Les mieux notés</a></li>
+                                <li><a href="">mes Favories</a></li>
+                                <li><a href="">Mes recommandations</a></li>
+                                <li><a href="">les plus consulter</a></li>
+                                <li><a href="">tout les articles</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">À propos</a></li>
+                    </ul>
+
+                </nav>
+            </div>
+            <!-- Canvas Menu End -->
+
+        </div>
+        <!-- off Canvas End -->
+    </th:block>
+
+    <!-- fin du menu proprement dit -->
+</body>
+
+</html>
